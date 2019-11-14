@@ -11,6 +11,8 @@ public class Order extends PanacheEntity {
 
     String orderNumber;
 
+    String name;
+
     OrderStatus status;
 
     public String getOrderNumber() {

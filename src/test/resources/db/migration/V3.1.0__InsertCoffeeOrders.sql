@@ -1,1 +1,1 @@
-insert into test.coffee_order (id, orderNumber, status) values (nextval('test.hibernate_sequence'), '123456789', 1);
+insert into test.coffee_order (id, name, orderNumber, status) values (nextval('test.hibernate_sequence'), 'Jeremy','123456789', 1);
