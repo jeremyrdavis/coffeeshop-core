@@ -10,15 +10,18 @@ import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * BaristaResource handles communication with the Barista Microservice.
+ * Kafka is used for communication.
+ */
 @ApplicationScoped
-public class KafkaResource {
+public class BaristaResource {
 
     @Inject
     CoffeeShop coffeeShop;
 
     private Jsonb jsonb = JsonbBuilder.create();
 
-/*
     @Incoming("orders")
     public void acceptOrder(String message) {
         Order order = jsonb.fromJson(message, Order.class);
@@ -28,5 +31,6 @@ public class KafkaResource {
             System.out.println(result.toString());
         });
     }
-*/
+
+
 }
