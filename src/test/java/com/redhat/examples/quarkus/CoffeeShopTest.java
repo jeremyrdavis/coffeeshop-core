@@ -3,6 +3,8 @@ package com.redhat.examples.quarkus;
 import com.redhat.examples.quarkus.model.Order;
 import com.redhat.examples.quarkus.model.OrderStatus;
 import io.quarkus.test.junit.QuarkusTest;
+import org.flywaydb.core.Flyway;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
@@ -15,6 +17,15 @@ public class CoffeeShopTest {
 
     @Inject
     CoffeeShop coffeeShop;
+
+    @Inject
+    Flyway flyway;
+
+    @BeforeEach
+    public void setUp() {
+        flyway.clean();
+        flyway.migrate();
+    }
 
     @Test
     public void testAcceptOrder() {

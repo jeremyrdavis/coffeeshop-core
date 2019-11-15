@@ -38,7 +38,7 @@ public class CoffeeShopResourceTest {
                 .body(payload)
                 .post("/order")
           .then()
-             .statusCode(202)
+             .statusCode(201)
              .body(containsString("ACCEPTED"));
     }
 

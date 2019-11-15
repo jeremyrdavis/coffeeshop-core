@@ -9,11 +9,40 @@ import javax.persistence.Table;
 @Table(name="coffee_order")
 public class Order extends PanacheEntity {
 
-    String orderNumber;
+    public String orderNumber;
 
-    String name;
+    public String name;
 
-    OrderStatus status;
+    public String beverage;
+
+    public OrderStatus status;
+
+    public Order() {
+    }
+
+    public Order(String orderNumber, String name, String beverage, OrderStatus status) {
+        this.orderNumber = orderNumber;
+        this.name = name;
+        this.beverage = beverage;
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        return builder.append("Order[")
+                .append("id=")
+                .append(id)
+                .append(",orderNumber=")
+                .append(orderNumber)
+                .append(",beverage=")
+                .append(beverage)
+                .append(",name=")
+                .append(name)
+                .append(",status=")
+                .append(status)
+                .append("]").toString();
+    }
 
     public String getOrderNumber() {
         return orderNumber;
