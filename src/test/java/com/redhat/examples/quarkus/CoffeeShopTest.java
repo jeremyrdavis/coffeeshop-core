@@ -1,5 +1,6 @@
 package com.redhat.examples.quarkus;
 
+import com.redhat.examples.quarkus.model.Beverages;
 import com.redhat.examples.quarkus.model.Order;
 import com.redhat.examples.quarkus.model.OrderStatus;
 import io.quarkus.test.junit.QuarkusTest;
@@ -39,6 +40,12 @@ public class CoffeeShopTest {
     public void updateOrder() {
         Order result = coffeeShop.updateOrder(1, OrderStatus.IN_PROGRESS);
         assertEquals(OrderStatus.IN_PROGRESS, result.getStatus());
+    }
+
+    @Test
+    public void testAcceptBeverageOrder() {
+        Order order = new Order();
+        order.beverage = Beverages.BLACK_COFFEE;
     }
 
 

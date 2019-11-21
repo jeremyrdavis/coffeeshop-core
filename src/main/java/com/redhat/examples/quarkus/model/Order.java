@@ -13,14 +13,14 @@ public class Order extends PanacheEntity {
 
     public String name;
 
-    public String beverage;
+    public Beverages beverage;
 
     public OrderStatus status;
 
     public Order() {
     }
 
-    public Order(String orderNumber, String name, String beverage, OrderStatus status) {
+    public Order(String orderNumber, String name, Beverages beverage, OrderStatus status) {
         this.orderNumber = orderNumber;
         this.name = name;
         this.beverage = beverage;
