@@ -2,6 +2,14 @@ version: '2'
 
 services:
 
+  db:
+    image: postgres
+    container_name: "devdb"
+    restart: always
+    environment:
+      POSTGRES_USER:
+      POSTGRES_PASSWORD: redhat-19
+
   zookeeper:
     image: strimzi/kafka:0.11.3-kafka-2.1.0
     command: [

@@ -2,8 +2,6 @@ package com.redhat.examples.quarkus.infrastructure;
 
 import com.redhat.examples.quarkus.CoffeeShop;
 import com.redhat.examples.quarkus.model.Order;
-import org.eclipse.microprofile.reactive.streams.operators.ReactiveStreams;
-import org.reactivestreams.Publisher;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -27,7 +25,7 @@ public class CoffeeShopResource {
     @Path("/order")
     @Transactional
     public Response createOrder(Order order) {
-        Order result = coffeeShop.acceptOrder(order);
+        Order result = coffeeShop.orderIn(order);
         return Response.created(URI.create("/order/" + result.id)).entity(result).build();
     }
 

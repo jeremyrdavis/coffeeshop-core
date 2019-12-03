@@ -27,7 +27,7 @@ public class BaristaResource {
         Order order = jsonb.fromJson(message, Order.class);
         System.out.println("Received order from Kafka : " + message);
         CompletableFuture.runAsync(() -> {
-            Order result = coffeeShop.acceptOrder(order);
+            Order result = coffeeShop.orderIn(order);
             System.out.println(result.toString());
         });
     }

@@ -1,21 +1,34 @@
 package com.redhat.examples.quarkus;
 
+import com.redhat.examples.quarkus.infrastructure.BaristaResource;
+import com.redhat.examples.quarkus.infrastructure.KitchenService;
 import com.redhat.examples.quarkus.model.Order;
 import com.redhat.examples.quarkus.model.OrderStatus;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.UUID;
 
 @ApplicationScoped
 public class CoffeeShop {
 
+    @Inject
+    BaristaResource baristaResource;
+
+    @Inject
+    KitchenService kitchenService;
+
     @Transactional
-    public Order acceptOrder(Order order) {
-            order.setOrderNumber(UUID.randomUUID().toString());
-            order.setStatus(OrderStatus.ACCEPTED);
-            order.persist();
-            return order;
+    public Order orderIn(Order order) {
+
+        order.setOrderNumber(UUID.randomUUID().toString());
+        order.setStatus(OrderStatus.ACCEPTED);
+        order.persist();
+
+        order.getKitchenOrder().ifPresent(ko -> kitchenService.orderIn(ko));
+
+        return order;
     }
 
     @Transactional
