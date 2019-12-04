@@ -5,15 +5,12 @@ import com.redhat.examples.quarkus.model.Order;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 
-@Path("/")
+@Path("/order")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CoffeeShopResource {
@@ -22,11 +19,20 @@ public class CoffeeShopResource {
     CoffeeShop coffeeShop;
 
     @POST
-    @Path("/order")
     @Transactional
     public Response createOrder(Order order) {
         Order result = coffeeShop.orderIn(order);
         return Response.created(URI.create("/order/" + result.id)).entity(result).build();
+    }
+
+    @GET
+    @Path("/{id}")
+    public Response getOrder(@PathParam("id") Long id){
+        Order order = Order.findById(id);
+        if (order == null) {
+            return Response.noContent().build();
+        }
+        return Response.ok().entity(order).build();
     }
 
 }

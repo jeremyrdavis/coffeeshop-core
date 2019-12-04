@@ -30,7 +30,7 @@ public class CoffeeShopResourceTest {
     @Test
     public void testPlaceOrderEndpoint() {
 
-        String payload = "{\"name\":\"Jeremy\",\"beverage\":\"Latte\"}";
+        String payload = "{\"name\":\"Jeremy\",\"beverage\":\"LATTE\"}";
 
         given()
           .when()
