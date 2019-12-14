@@ -75,5 +75,17 @@ public class CoffeeShopTest {
         assertFalse(updatedOrder.orderNumber.equals(updatedAnotherOrder.orderNumber));
     }
 
+    @Test
+    public void testBeverageOnlyOrder() {
+
+        Order order = new Order("Jeremy");
+        order.addBeverage(Beverage.BLACK_COFFEE);
+
+        Order updatedOrder = coffeeShop.orderIn(order);
+
+        assertNotNull(updatedOrder.orderNumber);
+        assertNotNull(updatedOrder.id);
+        assertEquals(OrderStatus.ACCEPTED, updatedOrder.status);
+    }
 
 }

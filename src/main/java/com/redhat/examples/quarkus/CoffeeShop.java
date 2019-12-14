@@ -1,27 +1,31 @@
 package com.redhat.examples.quarkus;
 
-import com.redhat.examples.quarkus.infrastructure.BaristaResource;
+import com.redhat.examples.quarkus.infrastructure.BaristaService;
 import com.redhat.examples.quarkus.infrastructure.KitchenService;
 import com.redhat.examples.quarkus.model.Order;
 import com.redhat.examples.quarkus.model.OrderStatus;
+import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.UUID;
-import java.util.stream.Stream;
+
 
 @ApplicationScoped
 public class CoffeeShop {
 
+    Logger logger = Logger.getLogger(CoffeeShop.class);
+
     @Inject
-    BaristaResource baristaResource;
+    BaristaService baristaResource;
 
     @Inject
     KitchenService kitchenService;
 
     @Transactional
     public Order orderIn(final Order order) {
+
+        logger.debug("received order:" + order.toString());
 
         order.setStatus(OrderStatus.ACCEPTED);
         order.persist();
