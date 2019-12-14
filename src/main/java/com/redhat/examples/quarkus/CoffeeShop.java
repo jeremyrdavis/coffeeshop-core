@@ -23,7 +23,6 @@ public class CoffeeShop {
     @Transactional
     public Order orderIn(Order order) {
 
-        order.setOrderNumber(UUID.randomUUID().toString());
         order.setStatus(OrderStatus.ACCEPTED);
         order.persist();
 

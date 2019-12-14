@@ -19,10 +19,9 @@ public class DomainModelsResource {
         switch (model) {
             case "Order":
                 Order order = new Order();
-                order.orderNumber = "b1f5c729-83ae-4e9d-87ca-abae7a1b87b3";
                 order.name = "Jeremy";
                 order.status = OrderStatus.ACCEPTED;
-//                order.addBeverage(Beverage.BLACK_COFFEE);
+                order.addBeverage(Beverage.BLACK_COFFEE);
                 return Response.ok().entity(order).build();
             default:
                 return Response.noContent().build();

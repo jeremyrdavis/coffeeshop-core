@@ -2,16 +2,15 @@ package com.redhat.examples.quarkus.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
+import javax.json.bind.annotation.JsonbProperty;
 import javax.persistence.*;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Entity
 @Table(name = "coffee_order")
 public class Order extends PanacheEntity {
 
-    public String orderNumber;
+    public final String orderNumber;
 
     public String name;
 
@@ -26,7 +25,14 @@ public class Order extends PanacheEntity {
 
     public OrderStatus status;
 
+    public Order() {
+        this.orderNumber = UUID.randomUUID().toString();
+    }
+
     public void addBeverage(Beverage beverage) {
+        if (this.beverageOrder == null) {
+            this.beverageOrder = new ArrayList<>();
+        }
         this.beverageOrder.add(new BeverageOrder(this, beverage));
     }
 
@@ -48,20 +54,16 @@ public class Order extends PanacheEntity {
     }
 
     public Optional<List<KitchenOrder>> getKitchenOrder() {
-        return Optional.of(kitchenOrder);
+        return Optional.ofNullable(kitchenOrder);
     }
 
     public Optional<List<BeverageOrder>> getBeverageOrder() {
-        return Optional.of(beverageOrder);
+        return Optional.ofNullable(beverageOrder);
     }
 
 
     public String getOrderNumber() {
         return orderNumber;
-    }
-
-    public void setOrderNumber(String orderNumber) {
-        this.orderNumber = orderNumber;
     }
 
     public String getName() {

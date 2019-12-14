@@ -15,15 +15,14 @@ public class BeverageOrder extends PanacheEntity {
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
-    Beverage beverage;
-
+    public Beverage beverage;
 
     public BeverageOrder() {
     }
 
-    public BeverageOrder(Order order, Beverage beverage) {
-
+    public BeverageOrder(Order order, Beverage beverage){
         this.order = order;
         this.beverage = beverage;
     }
+
 }

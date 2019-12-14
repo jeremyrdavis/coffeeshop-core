@@ -38,7 +38,7 @@ public class KitchenOrderTest {
         await().atLeast(Duration.FIVE_SECONDS);
 
         Order order = new Order();
-        KitchenOrder kitchenOrder = new KitchenOrder("12345", "Jeremy", MenuItem.COOKIE);
+        KitchenOrder kitchenOrder = new KitchenOrder(order, MenuItem.COOKIE);
 //        order.addKitchenOrder(kitchenOrder);
 //        Order acceptedOrder = coffeeShop.orderIn(kitchenOrder);
 

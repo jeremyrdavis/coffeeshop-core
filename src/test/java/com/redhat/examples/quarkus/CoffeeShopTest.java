@@ -1,9 +1,6 @@
 package com.redhat.examples.quarkus;
 
-import com.redhat.examples.quarkus.model.Beverage;
-import com.redhat.examples.quarkus.model.MenuItem;
-import com.redhat.examples.quarkus.model.Order;
-import com.redhat.examples.quarkus.model.OrderStatus;
+import com.redhat.examples.quarkus.model.*;
 import io.quarkus.test.junit.QuarkusTest;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,8 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 public class CoffeeShopTest {
@@ -39,7 +35,13 @@ public class CoffeeShopTest {
 
     @Test
     public void updateOrder() {
-        Order result = coffeeShop.updateOrder(1, OrderStatus.IN_PROGRESS);
+        Order order = new Order();
+        BeverageOrder beverageOrder = new BeverageOrder(order, Beverage.BLACK_COFFEE);
+        KitchenOrder kitchenOrder = new KitchenOrder(order, MenuItem.COOKIE);
+
+        Order updatedOrder = coffeeShop.orderIn(order);
+
+        Order result = coffeeShop.updateOrder(updatedOrder.id, OrderStatus.IN_PROGRESS);
         assertEquals(OrderStatus.IN_PROGRESS, result.getStatus());
     }
 
@@ -51,12 +53,26 @@ public class CoffeeShopTest {
 
     @Test
     public void testKitchenOrder() {
+
         Order order = new Order();
-        order.beverage = Beverage.BLACK_COFFEE;
-        order.menuItem = MenuItem.COOKIE;
+        BeverageOrder beverageOrder = new BeverageOrder(order, Beverage.BLACK_COFFEE);
+        KitchenOrder kitchenOrder = new KitchenOrder(order, MenuItem.COOKIE);
+
         Order updatedOrder = coffeeShop.orderIn(order);
+
         assertNotNull("The order should have a number", updatedOrder.orderNumber);
         assertEquals(OrderStatus.ACCEPTED, updatedOrder.status);
+
+        Order anotherOrder = new Order();
+        BeverageOrder anotherBeverageOrder = new BeverageOrder(order, Beverage.COFFEE_WITH_ROOM);
+        KitchenOrder anotherKitchenOrder = new KitchenOrder(order, MenuItem.MUFFIN);
+
+        Order updatedAnotherOrder = coffeeShop.orderIn(anotherOrder);
+
+        assertNotNull("The order should have a number", updatedAnotherOrder.orderNumber);
+        assertEquals(OrderStatus.ACCEPTED, updatedAnotherOrder.status);
+
+        assertFalse(updatedOrder.orderNumber.equals(updatedAnotherOrder.orderNumber));
     }
 
 

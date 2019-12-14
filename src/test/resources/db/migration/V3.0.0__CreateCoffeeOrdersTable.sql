@@ -1,8 +1,7 @@
 create table coffee_order (
-    id int8 not null,
-    name varchar(255),
+   id int8 not null,
     beverage varchar(255),
-    menuItem varchar(255),
+    name varchar(255),
     orderNumber varchar(255),
     status int4,
     primary key (id)

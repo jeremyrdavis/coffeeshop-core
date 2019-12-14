@@ -1,0 +1,118 @@
+---
+openapi: 3.0.1
+info:
+  title: Generated API
+  version: "1.0"
+paths:
+  /api/models/{model}:
+    get:
+      parameters:
+      - name: model
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: OK
+  /hello:
+    get:
+      responses:
+        200:
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+  /order:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        200:
+          description: OK
+  /order/{id}:
+    get:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      responses:
+        200:
+          description: OK
+components:
+  schemas:
+    Beverage:
+      enum:
+      - BLACK_COFFEE
+      - COFFEE_WITH_ROOM
+      - DOUBLE_ESPRESSO
+      - ESPRESSO
+      - LATTE
+      type: string
+    BeverageOrder:
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        beverage:
+          $ref: '#/components/schemas/Beverage'
+        order:
+          $ref: '#/components/schemas/Order'
+    ListBeverageOrder:
+      type: array
+      items:
+        $ref: '#/components/schemas/BeverageOrder'
+    KitchenOrder:
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        menuItem:
+          $ref: '#/components/schemas/MenuItem'
+        order:
+          $ref: '#/components/schemas/Order'
+    ListKitchenOrder:
+      type: array
+      items:
+        $ref: '#/components/schemas/KitchenOrder'
+    OrderStatus:
+      enum:
+      - ACCEPTED
+      - IN_PROGRESS
+      - READY
+      type: string
+    MenuItem:
+      enum:
+      - BAGEL
+      - CAKE_POP
+      - COOKIE
+      - MUFFIN
+      - PANINI
+      type: string
+    Order:
+      type: object
+      properties:
+        id:
+          format: int64
+          type: integer
+        beverage:
+          $ref: '#/components/schemas/Beverage'
+        beverageOrder:
+          $ref: '#/components/schemas/ListBeverageOrder'
+        kitchenOrder:
+          $ref: '#/components/schemas/ListKitchenOrder'
+        name:
+          type: string
+        orderNumber:
+          type: string
+        status:
+          $ref: '#/components/schemas/OrderStatus'
