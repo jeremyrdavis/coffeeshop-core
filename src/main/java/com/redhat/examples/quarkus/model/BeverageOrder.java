@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="beverage_order")
-public class BeverageOrder extends PanacheEntity {
+public class BeverageOrder extends PanacheEntity implements CoffeeShopOrder{
 
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)

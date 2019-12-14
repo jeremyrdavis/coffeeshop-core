@@ -8,7 +8,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "coffee_order")
-public class Order extends PanacheEntity {
+public class Order extends PanacheEntity implements CoffeeShopOrder{
 
     public final String orderNumber;
 

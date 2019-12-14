@@ -88,4 +88,18 @@ public class CoffeeShopTest {
         assertEquals(OrderStatus.ACCEPTED, updatedOrder.status);
     }
 
+    @Test
+    public void testDashboardServiceReceivesOrderInNotification(){
+
+        Order order = new Order("Jeremy");
+        order.addBeverage(Beverage.BLACK_COFFEE);
+
+        Order updatedOrder = coffeeShop.orderIn(order);
+
+        assertNotNull(updatedOrder.orderNumber);
+        assertNotNull(updatedOrder.id);
+        assertEquals(OrderStatus.ACCEPTED, updatedOrder.status);
+
+    }
+
 }
