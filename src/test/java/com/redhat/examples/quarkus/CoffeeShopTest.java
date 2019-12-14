@@ -1,6 +1,6 @@
 package com.redhat.examples.quarkus;
 
-import com.redhat.examples.quarkus.model.Beverages;
+import com.redhat.examples.quarkus.model.Beverage;
 import com.redhat.examples.quarkus.model.MenuItem;
 import com.redhat.examples.quarkus.model.Order;
 import com.redhat.examples.quarkus.model.OrderStatus;
@@ -10,8 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -48,13 +46,13 @@ public class CoffeeShopTest {
     @Test
     public void testAcceptBeverageOrder() {
         Order order = new Order();
-        order.beverage = Beverages.BLACK_COFFEE;
+        order.beverage = Beverage.BLACK_COFFEE;
     }
 
     @Test
     public void testKitchenOrder() {
         Order order = new Order();
-        order.beverage = Beverages.BLACK_COFFEE;
+        order.beverage = Beverage.BLACK_COFFEE;
         order.menuItem = MenuItem.COOKIE;
         Order updatedOrder = coffeeShop.orderIn(order);
         assertNotNull("The order should have a number", updatedOrder.orderNumber);

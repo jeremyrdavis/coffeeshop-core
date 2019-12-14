@@ -3,6 +3,7 @@ package com.redhat.examples.quarkus;
 import com.redhat.examples.quarkus.infrastructure.KitchenService;
 import com.redhat.examples.quarkus.model.KitchenOrder;
 import com.redhat.examples.quarkus.model.MenuItem;
+import com.redhat.examples.quarkus.model.Order;
 import io.quarkus.test.junit.QuarkusTest;
 import net.mguenther.kafka.junit.EmbeddedKafkaCluster;
 import net.mguenther.kafka.junit.KeyValue;
@@ -27,21 +28,19 @@ import static org.awaitility.Awaitility.await;
 
 
 @QuarkusTest
-public class KitchenServiceTest {
+public class KitchenOrderTest {
 
     @Inject
-    KitchenService kitchenService;
-
-    @Test
-    public void testConnection() {
-    }
+    CoffeeShop coffeeShop;
 
     public void testSendOrderToKitchen() throws InterruptedException {
 
         await().atLeast(Duration.FIVE_SECONDS);
 
+        Order order = new Order();
         KitchenOrder kitchenOrder = new KitchenOrder("12345", "Jeremy", MenuItem.COOKIE);
-        kitchenService.orderIn(kitchenOrder);
+//        order.addKitchenOrder(kitchenOrder);
+//        Order acceptedOrder = coffeeShop.orderIn(kitchenOrder);
 
         await().atLeast(Duration.TEN_SECONDS);
 

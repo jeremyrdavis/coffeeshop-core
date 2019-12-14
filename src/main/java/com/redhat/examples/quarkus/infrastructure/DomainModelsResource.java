@@ -1,6 +1,6 @@
 package com.redhat.examples.quarkus.infrastructure;
 
-import com.redhat.examples.quarkus.model.Beverages;
+import com.redhat.examples.quarkus.model.Beverage;
 import com.redhat.examples.quarkus.model.Order;
 import com.redhat.examples.quarkus.model.OrderStatus;
 
@@ -18,7 +18,12 @@ public class DomainModelsResource {
     public Response getModel(@PathParam("model") String model) {
         switch (model) {
             case "Order":
-                return Response.ok(new Order("b1f5c729-83ae-4e9d-87ca-abae7a1b87b3", "Jeremy", Beverages.BLACK_COFFEE, OrderStatus.ACCEPTED)).build();
+                Order order = new Order();
+                order.orderNumber = "b1f5c729-83ae-4e9d-87ca-abae7a1b87b3";
+                order.name = "Jeremy";
+                order.status = OrderStatus.ACCEPTED;
+//                order.addBeverage(Beverage.BLACK_COFFEE);
+                return Response.ok().entity(order).build();
             default:
                 return Response.noContent().build();
 

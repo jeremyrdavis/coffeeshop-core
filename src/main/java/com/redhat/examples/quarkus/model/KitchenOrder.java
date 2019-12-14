@@ -1,48 +1,47 @@
 package com.redhat.examples.quarkus.model;
 
-public class KitchenOrder {
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
-    String orderId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-    String name;
+@Entity
+@Table(name = "kitchen_order")
+public class KitchenOrder extends PanacheEntity {
+
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
 
     MenuItem menuItem;
-
 
     public KitchenOrder() {
     }
 
-    public KitchenOrder(String orderId, String name, MenuItem menuItem) {
-        this.orderId = orderId;
-        this.name = name;
+    public KitchenOrder(Order order, MenuItem menuItem) {
+        this.order = order;
         this.menuItem = menuItem;
     }
 
     @Override
     public String toString() {
-        return new StringBuilder().append("KitchenOrder[orderId=")
-                .append(orderId)
+        return new StringBuilder().append("KitchenOrder[order=")
+                .append(order.id)
                 .append(",name=")
-                .append(name)
+                .append(order.name)
                 .append(",menuItem=")
                 .append(menuItem)
                 .append("]").toString();
     }
 
-    public String getOrderId() {
-        return orderId;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public MenuItem getMenuItem() {

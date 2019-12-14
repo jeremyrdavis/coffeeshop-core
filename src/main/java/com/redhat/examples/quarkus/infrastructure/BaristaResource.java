@@ -1,6 +1,7 @@
 package com.redhat.examples.quarkus.infrastructure;
 
 import com.redhat.examples.quarkus.CoffeeShop;
+import com.redhat.examples.quarkus.model.BeverageOrder;
 import com.redhat.examples.quarkus.model.Order;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 
@@ -21,6 +22,10 @@ public class BaristaResource {
     CoffeeShop coffeeShop;
 
     private Jsonb jsonb = JsonbBuilder.create();
+
+    public void orderIn(BeverageOrder beverageOrder) {
+
+    }
 
     @Incoming("orders")
     public void acceptOrder(String message) {

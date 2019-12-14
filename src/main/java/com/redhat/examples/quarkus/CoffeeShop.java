@@ -9,6 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @ApplicationScoped
 public class CoffeeShop {
@@ -26,7 +27,8 @@ public class CoffeeShop {
         order.setStatus(OrderStatus.ACCEPTED);
         order.persist();
 
-        order.getKitchenOrder().ifPresent(ko -> kitchenService.orderIn(ko));
+        order.getBeverageOrder().ifPresent(beverages -> beverages.forEach(b -> baristaResource.orderIn(b)));
+        order.getKitchenOrder().ifPresent(ko -> ko.stream().forEach(o -> kitchenService.orderIn(o)));
 
         return order;
     }

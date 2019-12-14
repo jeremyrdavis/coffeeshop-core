@@ -3,6 +3,8 @@ package com.redhat.examples.quarkus.model;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 import javax.persistence.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Entity
@@ -14,38 +16,21 @@ public class Order extends PanacheEntity {
     public String name;
 
     @Enumerated(EnumType.STRING)
-    public Beverages beverage;
+    public Beverage beverage;
+
+    @OneToMany
+    private List<BeverageOrder> beverageOrder;
+
+    @OneToMany
+    private List<KitchenOrder> kitchenOrder;
 
     public OrderStatus status;
 
-    @Enumerated(EnumType.STRING)
-    public MenuItem menuItem;
-
-    public Order() {
+    public void addBeverage(Beverage beverage) {
+        this.beverageOrder.add(new BeverageOrder(this, beverage));
     }
-
-    public Order(String orderNumber, String name, Beverages beverage, OrderStatus status) {
-        this.orderNumber = orderNumber;
-        this.name = name;
-        this.beverage = beverage;
-        this.status = status;
-    }
-
-    public Optional<Beverages> getBeverage() {
-        return Optional.of(this.beverage);
-    }
-
-    public Optional<KitchenOrder> getKitchenOrder() {
-        if (this.menuItem != null) {
-            return Optional.of(new KitchenOrder(this.orderNumber, this.name, this.menuItem));
-        }else{
-            return Optional.empty();
-        }
-    }
-
 
     @Override
-
     public String toString() {
         StringBuilder builder = new StringBuilder();
         return builder.append("Order[")
@@ -62,12 +47,45 @@ public class Order extends PanacheEntity {
                 .append("]").toString();
     }
 
+    public Optional<List<KitchenOrder>> getKitchenOrder() {
+        return Optional.of(kitchenOrder);
+    }
+
+    public Optional<List<BeverageOrder>> getBeverageOrder() {
+        return Optional.of(beverageOrder);
+    }
+
+
     public String getOrderNumber() {
         return orderNumber;
     }
 
-    public void setOrderNumber(String idToSet) {
-        orderNumber = idToSet;
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Beverage getBeverage() {
+        return beverage;
+    }
+
+    public void setBeverage(Beverage beverage) {
+        this.beverage = beverage;
+    }
+
+    public void setBeverageOrder(List<BeverageOrder> beverageOrder) {
+        this.beverageOrder = beverageOrder;
+    }
+
+    public void setKitchenOrder(List<KitchenOrder> kitchenOrder) {
+        this.kitchenOrder = kitchenOrder;
     }
 
     public OrderStatus getStatus() {
