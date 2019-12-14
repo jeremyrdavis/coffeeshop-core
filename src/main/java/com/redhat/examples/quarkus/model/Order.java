@@ -17,10 +17,10 @@ public class Order extends PanacheEntity {
     @Enumerated(EnumType.STRING)
     public Beverage beverage;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL) @JsonbProperty("beverages")
     private List<BeverageOrder> beverageOrder;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL) @JsonbProperty("menuItems")
     private List<KitchenOrder> kitchenOrder;
 
     public OrderStatus status;
@@ -29,11 +29,23 @@ public class Order extends PanacheEntity {
         this.orderNumber = UUID.randomUUID().toString();
     }
 
+    public Order(String name){
+        this.orderNumber = UUID.randomUUID().toString();
+        this.name = name;
+    }
+
     public void addBeverage(Beverage beverage) {
         if (this.beverageOrder == null) {
             this.beverageOrder = new ArrayList<>();
         }
         this.beverageOrder.add(new BeverageOrder(this, beverage));
+    }
+
+    public void addMenuItem(MenuItem menuItem) {
+        if (this.kitchenOrder == null) {
+            this.kitchenOrder = new ArrayList<>();
+        }
+        this.kitchenOrder.add(new KitchenOrder(this, menuItem));
     }
 
     @Override

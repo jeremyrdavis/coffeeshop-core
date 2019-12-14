@@ -21,7 +21,7 @@ public class CoffeeShop {
     KitchenService kitchenService;
 
     @Transactional
-    public Order orderIn(Order order) {
+    public Order orderIn(final Order order) {
 
         order.setStatus(OrderStatus.ACCEPTED);
         order.persist();

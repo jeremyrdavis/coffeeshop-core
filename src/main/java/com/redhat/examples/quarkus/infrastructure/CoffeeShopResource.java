@@ -21,7 +21,15 @@ public class CoffeeShopResource {
     @POST
     @Transactional
     public Response createOrder(Order order) {
-        Order result = coffeeShop.orderIn(order);
+
+        Order orderIn = new Order();
+        order.getKitchenOrder().ifPresent(kitchenOrders -> {
+           kitchenOrders.forEach( ko -> {orderIn.addMenuItem(ko.getMenuItem());});
+        });
+        order.getBeverageOrder().ifPresent(beverageOrders -> {
+            beverageOrders.forEach( b -> {orderIn.addBeverage(b.beverage);});
+        });
+        Order result = coffeeShop.orderIn(orderIn);
         return Response.created(URI.create("/order/" + result.id)).entity(result).build();
     }
 
