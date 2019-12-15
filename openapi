@@ -24,7 +24,7 @@ paths:
             text/plain:
               schema:
                 type: string
-  /order:
+  /kitchenOrder:
     post:
       requestBody:
         content:
@@ -34,7 +34,7 @@ paths:
       responses:
         200:
           description: OK
-  /order/{id}:
+  /kitchenOrder/{id}:
     get:
       parameters:
       - name: id
@@ -64,7 +64,7 @@ components:
           type: integer
         beverage:
           $ref: '#/components/schemas/Beverage'
-        order:
+        kitchenOrder:
           $ref: '#/components/schemas/Order'
     ListBeverageOrder:
       type: array
@@ -78,7 +78,7 @@ components:
           type: integer
         menuItem:
           $ref: '#/components/schemas/MenuItem'
-        order:
+        kitchenOrder:
           $ref: '#/components/schemas/Order'
     ListKitchenOrder:
       type: array
