@@ -1,4 +1,4 @@
-package infrastructure;
+package com.redhat.examples.quarkus.infrastructure;
 
 import com.redhat.examples.quarkus.model.CoffeeShopOrder;
 import org.jboss.logging.Logger;

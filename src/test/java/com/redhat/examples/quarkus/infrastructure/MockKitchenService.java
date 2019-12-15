@@ -1,4 +1,4 @@
-package infrastructure;
+package com.redhat.examples.quarkus.infrastructure;
 
 import com.redhat.examples.quarkus.model.KitchenOrder;
 import io.quarkus.test.Mock;

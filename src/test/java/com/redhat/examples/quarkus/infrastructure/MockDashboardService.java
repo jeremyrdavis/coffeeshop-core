@@ -1,5 +1,6 @@
-package infrastructure;
+package com.redhat.examples.quarkus.infrastructure;
 
+import com.redhat.examples.quarkus.infrastructure.DashboardService;
 import com.redhat.examples.quarkus.model.CoffeeShopOrder;
 import io.quarkus.test.Mock;
 
