@@ -10,6 +10,9 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import javax.inject.Inject;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 @QuarkusTest @Testcontainers
 public class BaristaOrderIT extends BaseTestContainersIT{
 
@@ -28,7 +31,6 @@ public class BaristaOrderIT extends BaseTestContainersIT{
 
     @BeforeEach
     public void migrateDb() {
-
         flyway.migrate();
     }
 
@@ -40,7 +42,9 @@ public class BaristaOrderIT extends BaseTestContainersIT{
         BeverageOrder beverageOrder = new BeverageOrder(order, Beverage.BLACK_COFFEE);
 
         Order updatedOrder = coffeeShop.orderIn(order);
-    }
+        assertNotNull(updatedOrder);
+        assertEquals(OrderStatus.ACCEPTED, updatedOrder.status);
 
+    }
 
 }
