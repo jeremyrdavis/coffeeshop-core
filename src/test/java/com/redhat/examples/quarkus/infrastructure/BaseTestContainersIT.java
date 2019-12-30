@@ -24,9 +24,9 @@ public abstract class BaseTestContainersIT {
     static DockerComposeContainer dockerComposeContainer;
 
     //Kafka stuff
-    protected String INCOMING_TOPIC_NAME;
+    protected String PRODUCER_TOPIC;
 
-    protected String OUTGOING_TOPIC_NAME;
+    protected String CONSUMER_TOPIC;
 
     Jsonb jsonb = JsonbBuilder.create();
 
@@ -37,8 +37,8 @@ public abstract class BaseTestContainersIT {
     AdminClient kafkaAdminClient;
 
     public BaseTestContainersIT(final String incoming, final String outgoing) {
-        this.INCOMING_TOPIC_NAME = incoming;
-        this.OUTGOING_TOPIC_NAME = outgoing;
+        this.PRODUCER_TOPIC = incoming;
+        this.CONSUMER_TOPIC = outgoing;
     }
 
     @BeforeAll
@@ -79,8 +79,8 @@ public abstract class BaseTestContainersIT {
         //create Topics
 
         List<NewTopic> topics = new ArrayList<>();
-        topics.add(new NewTopic(INCOMING_TOPIC_NAME, 4, (short) 1));
-        topics.add(new NewTopic(OUTGOING_TOPIC_NAME, 4, (short) 1));
+        topics.add(new NewTopic(PRODUCER_TOPIC, 4, (short) 1));
+        topics.add(new NewTopic(CONSUMER_TOPIC, 4, (short) 1));
 
         kafkaAdminClient.createTopics(topics);
         kafkaAdminClient.close();
@@ -92,7 +92,7 @@ public abstract class BaseTestContainersIT {
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        props.put("input.topic.name", INCOMING_TOPIC_NAME);
+        props.put("input.topic.name", PRODUCER_TOPIC);
 
         //initialize the Producer
         kafkaProducer = new KafkaProducer(
@@ -119,6 +119,6 @@ public abstract class BaseTestContainersIT {
         kafkaConsumer = new KafkaConsumer(props);
 
         //subscribe
-        kafkaConsumer.subscribe(Arrays.asList(OUTGOING_TOPIC_NAME));
+        kafkaConsumer.subscribe(Arrays.asList(CONSUMER_TOPIC));
     }
 }

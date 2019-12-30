@@ -3,6 +3,7 @@ package com.redhat.examples.quarkus.infrastructure;
 import com.redhat.examples.quarkus.model.Beverage;
 import com.redhat.examples.quarkus.model.BeverageOrder;
 import io.quarkus.test.Mock;
+import io.smallrye.reactive.messaging.kafka.KafkaMessage;
 import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -19,7 +20,6 @@ public class MockBaristaService extends BaristaService {
 
         logger.debug("beverage order received:" + beverageOrder.toString());
         assertEquals(Beverage.BLACK_COFFEE, beverageOrder.beverage);
-
     }
 
 

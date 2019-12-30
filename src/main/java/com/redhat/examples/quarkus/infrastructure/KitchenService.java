@@ -17,9 +17,9 @@ public class KitchenService {
     Emitter<String> kitchen;
 */
 
-    public void orderIn(KitchenOrder kitchenOrder) {
+    public void orderIn(List<KitchenOrder> kitchenOrderList) {
 
-        System.out.println(kitchenOrder.toString());
+        System.out.println(kitchenOrderList.size());
         //kitchen.send(kitchenOrder.toString());
     }
 
