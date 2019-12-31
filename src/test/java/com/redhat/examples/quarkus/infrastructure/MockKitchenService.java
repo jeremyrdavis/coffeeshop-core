@@ -13,7 +13,7 @@ public class MockKitchenService extends KitchenService{
     @Override
     public void orderIn(List<KitchenOrder> kitchenOrderList) {
 
-        System.out.println(kitchenOrderList.size());
+        System.out.println("mock kitchen service" + kitchenOrderList.size());
         //kitchen.send(kitchenOrder.toString());
     }
 }

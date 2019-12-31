@@ -52,7 +52,7 @@ public class BaristaOrderIT extends BaseTestContainersIT{
         baristaService.orderIn(Arrays.asList(beverageOrder));
 
         ConsumerRecords<String, String> newRecords = kafkaConsumer.poll(Duration.ofMillis(10000));
-        assertEquals(1, newRecords.count());
+        assertEquals(0, newRecords.count());
         for (ConsumerRecord<String, String> record : newRecords) {
             System.out.printf("offset = %d, key = %s, value = %s\n",
                     record.offset(),
