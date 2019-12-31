@@ -4,6 +4,8 @@ import com.redhat.examples.quarkus.CoffeeShop;
 import com.redhat.examples.quarkus.model.Order;
 
 import javax.inject.Inject;
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -31,8 +33,7 @@ public class CoffeeShopResource {
         order.getBeverageOrder().ifPresent(beverageOrders -> {
             beverageOrders.forEach( b -> {orderIn.addBeverage(b.beverage);});
         });
-        CompletableFuture<Order> result = coffeeShop.orderIn(orderIn);
-        return result.thenApply(r -> {
+        return coffeeShop.orderIn(orderIn).thenApply(r -> {
             return Response.created(URI.create("/order/" + r.id)).entity(r).build();
         });
     }

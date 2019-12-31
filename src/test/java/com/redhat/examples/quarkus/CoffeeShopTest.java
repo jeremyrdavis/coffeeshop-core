@@ -5,6 +5,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 import javax.inject.Inject;
 
@@ -27,7 +28,7 @@ public class CoffeeShopTest {
         flyway.migrate();
     }
 
-    @Test
+    @Test @Timeout(10)
     public void testAcceptOrder() throws ExecutionException, InterruptedException {
         Order order = new Order();
         Order result = coffeeShop.orderIn(order).get();
@@ -35,7 +36,7 @@ public class CoffeeShopTest {
         assertNotNull(result.getOrderNumber());
     }
 
-    @Test
+    @Test @Timeout(10)
     public void updateOrder() throws ExecutionException, InterruptedException {
         Order order = new Order();
         BeverageOrder beverageOrder = new BeverageOrder(order, Beverage.BLACK_COFFEE);
@@ -47,13 +48,13 @@ public class CoffeeShopTest {
         assertEquals(OrderStatus.IN_PROGRESS, result.getStatus());
     }
 
-    @Test
+    @Test @Timeout(10)
     public void testAcceptBeverageOrder() {
         Order order = new Order();
         order.beverage = Beverage.BLACK_COFFEE;
     }
 
-    @Test
+    @Test @Timeout(10)
     public void testKitchenOrder() throws ExecutionException, InterruptedException {
 
         Order order = new Order();
@@ -77,7 +78,7 @@ public class CoffeeShopTest {
         assertFalse(updatedOrder.orderNumber.equals(updatedAnotherOrder.orderNumber));
     }
 
-    @Test
+    @Test @Timeout(10)
     public void testBeverageOnlyOrder() throws ExecutionException, InterruptedException {
 
         Order order = new Order("Jeremy");
@@ -90,7 +91,7 @@ public class CoffeeShopTest {
         assertEquals(OrderStatus.ACCEPTED, updatedOrder.status);
     }
 
-    @Test
+    @Test @Timeout(10)
     public void testDashboardServiceReceivesOrderInNotification() throws ExecutionException, InterruptedException {
 
         Order order = new Order("Jeremy");

@@ -27,23 +27,22 @@ public class CoffeeShop {
     @Inject
     KitchenService kitchenService;
 
+    public CoffeeShop() {
+    }
+
     @Transactional
-    public CompletableFuture<Order> orderIn(final Order order) {
+    public CompletableFuture<Order> orderIn(Order order) {
 
         logger.debug("received order:" + order.toString());
 
         order.setStatus(OrderStatus.ACCEPTED);
         order.persist();
 
-        CompletableFuture<Order> retVal = new CompletableFuture<>();
-
-        Executors.newCachedThreadPool().submit(() -> {
+        return CompletableFuture.supplyAsync(() ->{
             order.getBeverageOrder().ifPresent(this::baristaOrderIn);
             order.getKitchenOrder().ifPresent(this::kitchenOrderIn);
-            retVal.complete(order);
+            return order;
         });
-
-        return retVal;
     }
 
     void kitchenOrderIn(List<KitchenOrder> kitchenOrderList) {

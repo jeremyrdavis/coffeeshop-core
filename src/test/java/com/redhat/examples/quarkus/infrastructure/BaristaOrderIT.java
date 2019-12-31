@@ -24,9 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @QuarkusTest @Testcontainers
 public class BaristaOrderIT extends BaseTestContainersIT{
 
-    static final String incoming = CoffeeShopConstants.TOPIC_BARISTA_ORDERS_OUTGOING;
-    static final String outgoing = "barista-orders-in";
-
     @Inject
     Flyway flyway;
 
@@ -37,7 +34,8 @@ public class BaristaOrderIT extends BaseTestContainersIT{
         Set both to incoming because this test is verifying that orders are sent to the Barista Service
      */
     public BaristaOrderIT() {
-        super(incoming, incoming);
+        this.PRODUCER_TOPIC = CoffeeShopConstants.TOPIC_BARISTA_ORDERS_OUTGOING;
+        this.CONSUMER_TOPIC = CoffeeShopConstants.TOPIC_BARISTA_ORDERS_OUTGOING;
     }
 
     @BeforeEach
@@ -46,7 +44,7 @@ public class BaristaOrderIT extends BaseTestContainersIT{
     }
 
 
-    @Test @Timeout(20)
+    @Test @Timeout(60)
     public void testBaristaOrderIn() throws ExecutionException, InterruptedException {
 
         Order order = new Order();

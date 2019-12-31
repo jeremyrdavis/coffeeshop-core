@@ -10,6 +10,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.flywaydb.core.Flyway;
+import org.junit.jupiter.api.Timeout;
 
 
 import javax.inject.Inject;
@@ -37,7 +38,7 @@ public class CoffeeShopResourceTest {
         flyway.migrate();
     }
 
-    @Test
+    @Test @Timeout(10)
     public void testPlaceOrderEndpoint() {
 
         Order order = new Order("Jeremy");

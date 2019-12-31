@@ -36,10 +36,6 @@ public abstract class BaseTestContainersIT {
 
     AdminClient kafkaAdminClient;
 
-    public BaseTestContainersIT(final String incoming, final String outgoing) {
-        this.PRODUCER_TOPIC = incoming;
-        this.CONSUMER_TOPIC = outgoing;
-    }
 
     @BeforeAll
     public static void setUpAll() {

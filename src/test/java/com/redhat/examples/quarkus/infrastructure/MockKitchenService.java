@@ -4,13 +4,16 @@ import com.redhat.examples.quarkus.model.KitchenOrder;
 import io.quarkus.test.Mock;
 
 import javax.enterprise.context.ApplicationScoped;
+import java.util.List;
 
 @Mock
 @ApplicationScoped
-public class MockKitchenService {
+public class MockKitchenService extends KitchenService{
 
-    public void orderIn(KitchenOrder kitchenOrder) {
+    @Override
+    public void orderIn(List<KitchenOrder> kitchenOrderList) {
 
-        System.out.println(kitchenOrder.toString());
+        System.out.println(kitchenOrderList.size());
+        //kitchen.send(kitchenOrder.toString());
     }
 }

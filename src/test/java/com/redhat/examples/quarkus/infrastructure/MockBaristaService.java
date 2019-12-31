@@ -8,6 +8,8 @@ import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Mock
@@ -16,11 +18,12 @@ public class MockBaristaService extends BaristaService {
 
     Logger logger = Logger.getLogger(MockBaristaService.class);
 
-    public void orderIn(BeverageOrder beverageOrder) {
-
-        logger.debug("beverage order received:" + beverageOrder.toString());
-        assertEquals(Beverage.BLACK_COFFEE, beverageOrder.beverage);
+    @Override
+    public void orderIn(List<BeverageOrder> beverageOrderList) {
+        logger.debug("beverage order received:" + beverageOrderList.size());
+        beverageOrderList.forEach(o -> {
+            System.out.println(o);
+            assertEquals(Beverage.BLACK_COFFEE, o.beverage);
+        });
     }
-
-
 }
