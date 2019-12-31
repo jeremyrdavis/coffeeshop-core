@@ -28,10 +28,10 @@ public class BaristaOrderIT extends BaseTestContainersIT{
     Flyway flyway;
 
     @Inject
-    BaristaService baristaService;
+    CoffeeShop coffeeShop;
 
     /*
-        Set both to outgoing because this test is verifying that orders are sent to the Kitchen Service
+        Set both to incoming because this test is verifying that orders are sent to the Barista Service
      */
     public BaristaOrderIT() {
         this.PRODUCER_TOPIC = CoffeeShopConstants.TOPIC_BARISTA_ORDERS_OUTGOING;
@@ -49,7 +49,12 @@ public class BaristaOrderIT extends BaseTestContainersIT{
 
         Order order = new Order();
         BeverageOrder beverageOrder = new BeverageOrder(order, Beverage.BLACK_COFFEE);
-        baristaService.orderIn(Arrays.asList(beverageOrder));
+        order.setBeverageOrder(Arrays.asList(beverageOrder));
+
+        CompletableFuture<Order> futureOrder = coffeeShop.orderIn(order);
+        Order updatedOrder = futureOrder.get();
+        assertNotNull(updatedOrder);
+        assertEquals(OrderStatus.ACCEPTED, updatedOrder.status);
 
         ConsumerRecords<String, String> newRecords = kafkaConsumer.poll(Duration.ofMillis(10000));
         assertEquals(1, newRecords.count());
