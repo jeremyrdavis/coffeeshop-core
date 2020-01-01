@@ -10,3 +10,20 @@ docker run --name pgadmin -p 80:80 -e 'PGADMIN_DEFAULT_EMAIL=<<EMAIL_ADDRESS>>' 
 Topics
 
 order_updates
+
+## Integration tests
+
+Latest:
+
+```
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration combine.self="override">
+                            <excludes>
+                                <exclude>**/Mock*.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+
+```

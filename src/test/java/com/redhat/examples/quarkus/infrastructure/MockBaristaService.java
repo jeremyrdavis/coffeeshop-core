@@ -20,6 +20,7 @@ public class MockBaristaService extends BaristaService {
 
     @Override
     public void orderIn(List<BeverageOrder> beverageOrderList) {
+        System.out.println("MockBaristaService");
         logger.debug("beverage order received:" + beverageOrderList.size());
         beverageOrderList.forEach(o -> {
             System.out.println(o);
