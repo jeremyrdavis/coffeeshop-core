@@ -57,7 +57,7 @@ public class BaristaOrderIT extends BaseTestContainersIT{
         assertEquals(OrderStatus.ACCEPTED, updatedOrder.status);
 
         ConsumerRecords<String, String> newRecords = kafkaConsumer.poll(Duration.ofMillis(10000));
-        assertEquals(0, newRecords.count());
+        assertEquals(1, newRecords.count());
         for (ConsumerRecord<String, String> record : newRecords) {
             System.out.printf("offset = %d, key = %s, value = %s\n",
                     record.offset(),

@@ -164,7 +164,6 @@
                                 </goals>
                                 <configuration>
                                     <excludes>
-                                        <exclude>**/Barista*</exclude>
                                         <exclude>**/Native*</exclude>
                                     </excludes>
                                 </configuration>
