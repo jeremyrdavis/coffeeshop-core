@@ -1,7 +1,10 @@
 package com.redhat.examples.quarkus.infrastructure;
 
 import com.redhat.examples.quarkus.CoffeeShop;
-import com.redhat.examples.quarkus.model.*;
+import com.redhat.examples.quarkus.model.KitchenOrder;
+import com.redhat.examples.quarkus.model.MenuItem;
+import com.redhat.examples.quarkus.model.Order;
+import com.redhat.examples.quarkus.model.OrderStatus;
 import io.quarkus.test.junit.QuarkusTest;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -12,7 +15,6 @@ import org.junit.jupiter.api.Timeout;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import javax.inject.Inject;
-
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
@@ -22,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @QuarkusTest @Testcontainers
-public class BaristaOrderIT extends BaseTestContainersIT{
+public class SendKitchenOrderITCase extends BaseTestContainersIT{
 
     @Inject
     Flyway flyway;
@@ -33,9 +35,9 @@ public class BaristaOrderIT extends BaseTestContainersIT{
     /*
         Set both to incoming because this test is verifying that orders are sent to the Barista Service
      */
-    public BaristaOrderIT() {
-        this.PRODUCER_TOPIC = CoffeeShopConstants.TOPIC_BARISTA_ORDERS_OUTGOING;
-        this.CONSUMER_TOPIC = CoffeeShopConstants.TOPIC_BARISTA_ORDERS_OUTGOING;
+    public SendKitchenOrderITCase() {
+        this.PRODUCER_TOPIC = CoffeeShopConstants.TOPIC_KITCHEN_ORDERS_OUTGOING;
+        this.CONSUMER_TOPIC = CoffeeShopConstants.TOPIC_KITCHEN_ORDERS_OUTGOING;
     }
 
     @BeforeEach
@@ -43,13 +45,12 @@ public class BaristaOrderIT extends BaseTestContainersIT{
         flyway.migrate();
     }
 
-
     @Test @Timeout(60)
-    public void testBaristaOrderIn() throws ExecutionException, InterruptedException {
+    public void testSendKitchenOrder() throws ExecutionException, InterruptedException {
 
         Order order = new Order();
-        BeverageOrder beverageOrder = new BeverageOrder(order, Beverage.BLACK_COFFEE);
-        order.setBeverageOrder(Arrays.asList(beverageOrder));
+        KitchenOrder kitchenOrder = new KitchenOrder(order, MenuItem.COOKIE);
+        order.setKitchenOrder(Arrays.asList(kitchenOrder));
 
         CompletableFuture<Order> futureOrder = coffeeShop.orderIn(order);
         Order updatedOrder = futureOrder.get();
@@ -57,7 +58,7 @@ public class BaristaOrderIT extends BaseTestContainersIT{
         assertEquals(OrderStatus.ACCEPTED, updatedOrder.status);
 
         ConsumerRecords<String, String> newRecords = kafkaConsumer.poll(Duration.ofMillis(10000));
-        assertEquals(0, newRecords.count());
+        assertEquals(1, newRecords.count());
         for (ConsumerRecord<String, String> record : newRecords) {
             System.out.printf("offset = %d, key = %s, value = %s\n",
                     record.offset(),
@@ -65,4 +66,5 @@ public class BaristaOrderIT extends BaseTestContainersIT{
                     record.value());
         }
     }
+
 }
