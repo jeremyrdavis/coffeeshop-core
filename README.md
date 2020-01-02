@@ -11,9 +11,19 @@ Topics
 
 order_updates
 
-## Integration tests
+## Tests
 
-Latest:
+### Unit Tests
+
+mvn clean test runs the unit tests and uses Mocks to isolate functionality
+
+### Integration tests
+
+mvn clean verify -Ptestcontainers uses the "testcontainers" profile that excludes the Mocks when building the tests
+
+NOTE: unit tests are skipped
+
+Failsafe plugin needs to be configured to exclude the Mocks under testConpile
 
 ```
                     <plugin>
