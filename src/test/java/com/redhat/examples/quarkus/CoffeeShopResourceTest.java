@@ -48,7 +48,9 @@ public class CoffeeShopResourceTest {
         Jsonb jsonb = JsonbBuilder.create();
         String payload = jsonb.toJson(order);
 
+        System.out.println("payload\n");
         System.out.println(payload);
+        System.out.println("\n");
 
         Response response = given()
           .when()
