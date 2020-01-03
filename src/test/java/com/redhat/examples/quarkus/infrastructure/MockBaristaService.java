@@ -22,6 +22,7 @@ public class MockBaristaService extends BaristaService {
     public void orderIn(List<BeverageOrder> beverageOrderList) {
         System.out.println("MockBaristaService");
         logger.debug("beverage order received:" + beverageOrderList.size());
+        assertEquals(1, beverageOrderList.size());
         beverageOrderList.forEach(o -> {
             System.out.println(o);
             assertEquals(Beverage.BLACK_COFFEE, o.beverage);
