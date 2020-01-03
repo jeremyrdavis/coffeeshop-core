@@ -30,7 +30,7 @@ public class SendKitchenOrderITCase extends BaseTestContainersIT{
     Flyway flyway;
 
     @Inject
-    CoffeeShop coffeeShop;
+    KitchenService kitchenService;
 
     /*
         Set both to incoming because this test is verifying that orders are sent to the Barista Service
@@ -49,15 +49,19 @@ public class SendKitchenOrderITCase extends BaseTestContainersIT{
     public void testSendKitchenOrder() throws ExecutionException, InterruptedException {
 
         Order order = new Order();
+        order.id = 6L;
+        order.name = "Jeremy";
+
         KitchenOrder kitchenOrder = new KitchenOrder(order, MenuItem.COOKIE);
-        order.setKitchenOrder(Arrays.asList(kitchenOrder));
+        kitchenOrder.id = 7L;
+        System.out.println("kitchenOrder to be sent: " + kitchenOrder);
+        System.out.println("kitchenService: " + kitchenService.toString());
 
-        CompletableFuture<Order> futureOrder = coffeeShop.orderIn(order);
-        Order updatedOrder = futureOrder.get();
-        assertNotNull(updatedOrder);
-        assertEquals(OrderStatus.ACCEPTED, updatedOrder.status);
+        kitchenService.orderIn(Arrays.asList(kitchenOrder));
 
+        assertNotNull(kafkaConsumer);
         ConsumerRecords<String, String> newRecords = kafkaConsumer.poll(Duration.ofMillis(10000));
+        assertNotNull(newRecords);
         assertEquals(1, newRecords.count());
         for (ConsumerRecord<String, String> record : newRecords) {
             System.out.printf("offset = %d, key = %s, value = %s\n",

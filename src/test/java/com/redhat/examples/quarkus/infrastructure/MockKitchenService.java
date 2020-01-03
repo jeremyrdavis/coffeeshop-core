@@ -6,14 +6,11 @@ import io.quarkus.test.Mock;
 import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
 
-@Mock
-@ApplicationScoped
 public class MockKitchenService extends KitchenService{
 
     @Override
     public void orderIn(List<KitchenOrder> kitchenOrderList) {
 
         System.out.println("MockKitchenService" + kitchenOrderList.size());
-        //kitchen.send(kitchenOrder.toString());
     }
 }

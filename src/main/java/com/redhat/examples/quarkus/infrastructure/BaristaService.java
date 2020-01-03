@@ -57,12 +57,14 @@ public class BaristaService {
         });
     }
 
+/*
     @Incoming(TOPIC_INCOMING)
     public CompletionStage<Void> orderUp(Message<String> orderUp) {
 
         logger.debug("beverage order received:" + orderUp.toString());
         return CompletableFuture.completedFuture(null);
     }
+*/
 
     @PostConstruct
     public void postConstruct() {
