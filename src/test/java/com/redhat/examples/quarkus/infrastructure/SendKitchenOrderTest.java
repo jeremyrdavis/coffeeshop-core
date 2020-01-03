@@ -1,10 +1,7 @@
 package com.redhat.examples.quarkus.infrastructure;
 
 import com.redhat.examples.quarkus.CoffeeShop;
-import com.redhat.examples.quarkus.model.Beverage;
-import com.redhat.examples.quarkus.model.BeverageOrder;
-import com.redhat.examples.quarkus.model.Order;
-import com.redhat.examples.quarkus.model.OrderStatus;
+import com.redhat.examples.quarkus.model.*;
 import io.quarkus.test.junit.QuarkusTest;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -34,6 +31,7 @@ public class SendKitchenOrderTest {
     public void testBaristaOrderIn() throws ExecutionException, InterruptedException {
 
         Order order = new Order();
+        KitchenOrder kitchenOrder = new KitchenOrder(order, MenuItem.COOKIE);
         BeverageOrder beverageOrder = new BeverageOrder(order, Beverage.BLACK_COFFEE);
         order.setBeverageOrder(Arrays.asList(beverageOrder));
 
