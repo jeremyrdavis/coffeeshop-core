@@ -24,12 +24,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @QuarkusTest @Testcontainers
-public class BaristaOrderUpIT extends BaseTestContainersIT{
+public class ReceiveBaristaOrderIT extends BaseTestContainersIT{
 
     @Inject
     BaristaService baristaService;
 
-    public BaristaOrderUpIT() {
+    public ReceiveBaristaOrderIT() {
         // We use CONSUMER_TOPIC in this test case because we are testing message consumption from the Barista Service
         this.PRODUCER_TOPIC = CoffeeShopConstants.TOPIC_BARISTA_ORDERS_INCOMING;
         this.CONSUMER_TOPIC = CoffeeShopConstants.TOPIC_BARISTA_ORDERS_INCOMING;

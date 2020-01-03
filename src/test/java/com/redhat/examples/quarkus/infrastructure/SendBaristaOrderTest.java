@@ -16,9 +16,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @QuarkusTest
-public class SendBaristaOrderTestCase {
+public class SendBaristaOrderTest {
 
-    Logger logger = Logger.getLogger(SendBaristaOrderTestCase.class);
+    Logger logger = Logger.getLogger(SendBaristaOrderTest.class);
 
     @Inject
     CoffeeShop coffeeShop;

@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @QuarkusTest @Testcontainers
-public class BaristaOrderIT extends BaseTestContainersIT{
+public class SendBaristaOrderIT extends BaseTestContainersIT{
 
     @Inject
     Flyway flyway;
@@ -32,7 +32,7 @@ public class BaristaOrderIT extends BaseTestContainersIT{
     /*
         Set both to incoming because this test is verifying that orders are sent to the Barista Service
      */
-    public BaristaOrderIT() {
+    public SendBaristaOrderIT() {
         this.PRODUCER_TOPIC = CoffeeShopConstants.TOPIC_BARISTA_ORDERS_OUTGOING;
         this.CONSUMER_TOPIC = CoffeeShopConstants.TOPIC_BARISTA_ORDERS_OUTGOING;
     }
