@@ -12,6 +12,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Mock
+@ApplicationScoped
 public class MockBaristaService extends BaristaService {
 
     Logger logger = Logger.getLogger(MockBaristaService.class);
