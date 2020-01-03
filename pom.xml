@@ -180,6 +180,7 @@
                 </goals>
                 <configuration>
                   <excludes>
+                    <exclude>**/*Up*</exclude>
                     <exclude>**/Native*</exclude>
                   </excludes>
                 </configuration>
