@@ -1,6 +1,5 @@
 package com.redhat.examples.quarkus.infrastructure;
 
-import com.redhat.examples.quarkus.CoffeeShop;
 import com.redhat.examples.quarkus.model.*;
 import io.quarkus.test.junit.QuarkusTest;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -28,7 +27,7 @@ public class BaristaOrderIT extends BaseTestContainersIT{
     Flyway flyway;
 
     @Inject
-    CoffeeShop coffeeShop;
+    BaristaService baristaService;
 
     /*
         Set both to incoming because this test is verifying that orders are sent to the Barista Service
@@ -48,14 +47,14 @@ public class BaristaOrderIT extends BaseTestContainersIT{
     public void testBaristaOrderIn() throws ExecutionException, InterruptedException {
 
         Order order = new Order();
+        order.name = "Jeremy";
+        order.id = 6L;
         BeverageOrder beverageOrder = new BeverageOrder(order, Beverage.BLACK_COFFEE);
-        order.setBeverageOrder(Arrays.asList(beverageOrder));
+        beverageOrder.id = 7L;
 
-        CompletableFuture<Order> futureOrder = coffeeShop.orderIn(order);
-        Order updatedOrder = futureOrder.get();
-        assertNotNull(updatedOrder);
-        assertEquals(OrderStatus.ACCEPTED, updatedOrder.status);
+        baristaService.orderIn(Arrays.asList(beverageOrder));
 
+        // verify that Kafka receives the record
         ConsumerRecords<String, String> newRecords = kafkaConsumer.poll(Duration.ofMillis(10000));
         assertEquals(1, newRecords.count());
         for (ConsumerRecord<String, String> record : newRecords) {
